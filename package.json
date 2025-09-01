@@ -1,0 +1,26 @@
+{
+    "name": "event-games",
+    "private": true,
+    "version": "0.1.0",
+    "description": "Monorepo for browser games used in events",
+    "author": "",
+    "license": "MIT",
+    "scripts": {
+        "dev": "turbo run dev --parallel",
+        "build": "turbo run build",
+        "lint": "turbo run lint",
+        "test": "turbo run test",
+        "format": "prettier --write ."
+    },
+    "devDependencies": {
+        "eslint": "^8.57.0",
+        "eslint-config-prettier": "^9.1.0",
+        "prettier": "^3.3.3",
+        "turbo": "^2.0.6",
+        "typescript": "^5.5.4"
+    },
+    "engines": {
+        "node": ">=20"
+    },
+    "packageManager": "pnpm@9.15.9"
+}
