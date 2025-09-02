@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import tailwindConfig from "@event-games/tailwind-config";
 
 const config: Config = {
   content: [
@@ -9,7 +8,8 @@ const config: Config = {
     // packages/uiも対象に含める
     "../../packages/ui/src/lib/**/*.{js,ts,jsx,tsx}",
   ],
-  presets: [tailwindConfig],
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  presets: [require("@event-games/tailwind-config")],
   theme: {
     extend: {
       keyframes: {
