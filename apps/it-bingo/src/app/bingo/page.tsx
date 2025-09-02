@@ -144,23 +144,21 @@ function BingoClientPage() {
                   className={`
                     aspect-square
                     flex items-center justify-center text-center p-1
-                    rounded-full transition-all duration-200 ease-in-out border-2
+                    rounded-2xl transition-all duration-200 ease-in-out border-2
                     ${isCleared
                       ? 'bg-yellow-400 border-yellow-500 text-white font-bold shadow-lg'
                       : `bg-white border-neutral-300 ${isFree ? '' : 'cursor-pointer hover:border-yellow-400 hover:shadow-md'}`
                     }
                   `}
                 >
-                    <div className="flex items-center justify-center">
-                        {isFree ? <StarIcon /> : (
-                            <span className={`text-xs sm:text-sm
-                                ${isCleared ? 'text-white' : 'text-neutral-700'}
-                                ${isFree ? 'font-bold text-yellow-500' : ''}
-                            `}>
-                                {item}
-                            </span>
-                        )}
-                    </div>
+                    {isFree ? <StarIcon /> : (
+                        <span className={`text-xs sm:text-sm
+                            ${isCleared ? 'text-white' : 'text-neutral-700'}
+                            ${isFree ? 'font-bold text-yellow-500' : ''}
+                        `}>
+                            {item}
+                        </span>
+                    )}
                 </div>
               );
             })}
