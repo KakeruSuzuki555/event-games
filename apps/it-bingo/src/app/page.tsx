@@ -20,22 +20,22 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gray-50">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 bg-neutral-900 text-neutral-100">
+      <div className="w-full max-w-md p-8 space-y-8 bg-neutral-800/50 rounded-lg shadow-2xl">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-800">
+          <h1 className="text-4xl font-bold text-neutral-50 tracking-tight">
             IT業界あるあるBINGO
           </h1>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-3 text-neutral-300">
             プロフィールを入力してBINGOを始めよう！
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div>
             <label
               htmlFor="nickname"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-neutral-300 mb-1"
             >
               ニックネーム
             </label>
@@ -44,7 +44,7 @@ export default function Home() {
               type="text"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
+              className="mt-1 block w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-md shadow-sm placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-brand-500 sm:text-sm text-neutral-100"
               placeholder="例: すごいエンジニア"
             />
           </div>
@@ -52,7 +52,7 @@ export default function Home() {
           <div>
             <label
               htmlFor="job"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-neutral-300 mb-1"
             >
               職種
             </label>
@@ -60,10 +60,10 @@ export default function Home() {
               id="job"
               value={job}
               onChange={(e) => setJob(e.target.value as JobType)}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-sm rounded-md"
+              className="mt-1 block w-full pl-4 pr-10 py-2 bg-neutral-700 border border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 sm:text-sm text-neutral-100"
             >
               {Object.entries(JOB_TYPES).map(([key, name]) => (
-                <option key={key} value={key}>
+                <option key={key} value={key} className="bg-neutral-700 text-neutral-100">
                   {name}
                 </option>
               ))}
@@ -73,7 +73,7 @@ export default function Home() {
 
         <Button
           onClick={handleStartClick}
-          className="w-full !bg-brand-600 !hover:bg-brand-500"
+          className="w-full !text-lg !py-3"
         >
           BINGOカードを生成
         </Button>
