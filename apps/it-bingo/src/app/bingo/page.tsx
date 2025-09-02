@@ -147,10 +147,10 @@ function BingoClientPage() {
                 <div
                   key={index}
                   onClick={() => handleCellClick(index)}
-                  className={`aspect-square flex items-center justify-center text-center p-1 sm:p-2 rounded-lg transition-all duration-300 ease-in-out border border-neutral-700
+                  className={`aspect-square flex items-center justify-center text-center p-1 sm:p-2 rounded-lg transition-all duration-200 ease-in-out border
                     ${isCleared
-                      ? 'bg-accent-500 text-white font-bold scale-105 shadow-lg shadow-accent-500/50'
-                      : `bg-neutral-800 ${isFree ? '' : 'cursor-pointer hover:bg-neutral-700 hover:scale-105'}`
+                      ? 'bg-accent-500 text-white font-bold scale-105 shadow-lg shadow-accent-500/50 border-transparent'
+                      : `bg-neutral-800 border-neutral-700 ${isFree ? '' : 'cursor-pointer hover:bg-neutral-700 hover:border-accent-400 hover:-translate-y-0.5'}`
                     }
                   `}
                 >
