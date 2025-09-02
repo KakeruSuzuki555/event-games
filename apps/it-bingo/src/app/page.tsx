@@ -44,7 +44,7 @@ export default function Home() {
               type="text"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              className="mt-1 block w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-md shadow-sm placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-800 focus:ring-brand-500 sm:text-sm text-neutral-100"
+              className="mt-1 block w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-md shadow-sm placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-brand-500 sm:text-sm text-neutral-100"
               placeholder="例: すごいエンジニア"
             />
           </div>
@@ -60,7 +60,7 @@ export default function Home() {
               id="job"
               value={job}
               onChange={(e) => setJob(e.target.value as JobType)}
-              className="mt-1 block w-full pl-4 pr-10 py-2 bg-neutral-700 border border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-800 focus:ring-brand-500 sm:text-sm text-neutral-100"
+              className="mt-1 block w-full pl-4 pr-10 py-2 bg-neutral-700 border border-neutral-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 sm:text-sm text-neutral-100"
             >
               {Object.entries(JOB_TYPES).map(([key, name]) => (
                 <option key={key} value={key} className="bg-neutral-700 text-neutral-100">
