@@ -1,0 +1,47 @@
+---
+globs: *.ts,*.tsx
+description: TypeScript/React コーディング規約
+---
+
+## 型と宣言
+- 公開 API（export される関数・型）は明示的な型注釈を付ける
+- `any` は避け、ユニオンまたはジェネリクスで表現
+- 非同期関数は `Promise<ReturnType>` を明記
+
+## 命名
+- 関数は動詞、変数は名詞で意味的に明確にする
+- 省略語は避け、完全な単語を使用
+
+## 制御フロー
+- 早期 return を優先し、ネストを浅く保つ（2-3 レベル以内）
+- 例外は握りつぶさない。補足時は代替処理 or ログ方針を決める
+
+## コメント
+- 自明なコメントは不要。理由を説明するコメントのみ
+- 行内コメントは避け、対象行の直前に簡潔に記載
+
+## フォーマット / Lint
+- フォーマット: ルートの `pnpm format`（Prettier）を使用
+- Lint: 各アプリの設定（例: `eslint-config-next`）に従う
+
+## React / Next.js
+- クライアント側状態・イベントが必要なファイルのみ先頭に `"use client"`
+- サーバーコンポーネントをデフォルトとし、副作用最小化
+- フックは `useXxx` 命名、カスタムフックは責務を 1 つに限定
+
+## インポート
+- `@event-games/ui`, `@event-games/utils` は名前付き import を推奨
+- 相対パスは浅く保つ。再利用はパッケージ切り出しを検討
+
+## 例（良いスタイル）
+
+```ts
+// 目的の説明（なぜ必要か）
+export function formatElapsedTime(milliseconds: number): string {
+  if (milliseconds < 0) return "0s";
+  const seconds = Math.floor(milliseconds / 1000);
+  if (seconds < 60) return `${seconds}s`;
+  const minutes = Math.floor(seconds / 60);
+  return `${minutes}m ${seconds % 60}s`;
+}
+```
