@@ -142,7 +142,7 @@ function BingoClientPage() {
                   key={index}
                   onClick={() => handleCellClick(index)}
                   className={`
-                    w-16 h-16 sm:w-20 sm:h-20
+                    aspect-square
                     flex items-center justify-center text-center p-1
                     rounded-full transition-all duration-200 ease-in-out border-2
                     ${isCleared
