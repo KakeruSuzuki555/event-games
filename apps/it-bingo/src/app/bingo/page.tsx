@@ -9,7 +9,6 @@ import { toPng } from 'html-to-image';
 const BINGO_SIZE = 5;
 const FREE_CELL_INDEX = Math.floor((BINGO_SIZE * BINGO_SIZE) / 2);
 
-// Fisher-Yates shuffle algorithm
 const shuffle = (array: string[]) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -26,6 +25,18 @@ const WINNING_LINES = [
   // Diagonals
   [0, 6, 12, 18, 24], [4, 8, 12, 16, 20],
 ];
+
+const CheckIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-6 h-6 sm:w-8 sm:h-8">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+  </svg>
+);
+
+const StarIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-300">
+        <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.116 3.986 1.24 5.383c.218 1.121-.956 2.023-1.956 1.442L12 18.354l-4.573 2.98c-.996.58-2.174-.32-1.956-1.442l1.24-5.383L2.28 10.955c-.886-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.007z" clipRule="evenodd" />
+    </svg>
+);
 
 function BingoClientPage() {
   const searchParams = useSearchParams();
@@ -57,7 +68,7 @@ function BingoClientPage() {
     }
     if (count > bingoCount) {
       setShowBingo(true);
-      setTimeout(() => setShowBingo(false), 2000);
+      setTimeout(() => setShowBingo(false), 2500);
     }
     setBingoCount(count);
   };
@@ -76,10 +87,11 @@ function BingoClientPage() {
   };
 
   const handleSaveImage = useCallback(() => {
-    if (boardRef.current === null) {
-      return;
-    }
-    toPng(boardRef.current, { cacheBust: true, })
+    if (boardRef.current === null) return;
+    toPng(boardRef.current, {
+        cacheBust: true,
+        backgroundColor: '#1e293b' // neutral-800
+    })
       .then((dataUrl) => {
         const link = document.createElement('a');
         link.download = 'it-aruaru-bingo.png';
@@ -101,59 +113,73 @@ function BingoClientPage() {
 
   if (board.length === 0) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gray-100">
-        <p>BINGOカードを生成中...</p>
+      <main className="flex min-h-screen flex-col items-center justify-center bg-neutral-900 text-neutral-100">
+        <p className="text-lg animate-pulse">BINGOカードを生成中...</p>
       </main>
     );
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start p-4 sm:p-8 bg-gray-100">
+    <main className="min-h-screen bg-neutral-900 text-neutral-100 flex flex-col items-center justify-center p-2 sm:p-4">
       {showBingo && (
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-8xl font-extrabold text-red-500 z-20" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
-          BINGO!
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 transition-opacity duration-300 animate-fadeIn">
+          <div className="text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-red-500 to-pink-500 animate-zoomIn" style={{ textShadow: '0 0 20px rgba(255,255,255,0.5)' }}>
+            BINGO!
+          </div>
         </div>
       )}
-      <div className="w-full max-w-2xl mx-auto" ref={boardRef}>
-        <div className="p-4 bg-gray-100">
-            <div className="text-center mb-4">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 break-words">
-                {nickname}のBINGO
-            </h1>
-            <p className="text-lg font-semibold text-brand-600">
-                {bingoCount > 0 ? `${bingoCount} BINGO!` : 'BINGOを目指そう！'}
-            </p>
-            </div>
-            <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
-            {board.map((item, index) => (
+      <div className="w-full max-w-3xl mx-auto p-4 sm:p-6 md:p-8">
+        <header className="text-center mb-6">
+          <h1 className="text-3xl sm:text-4xl font-bold text-neutral-50 break-words tracking-wide">
+            {nickname}のBINGO
+          </h1>
+          <p className="mt-2 text-xl font-semibold text-accent-400">
+            {bingoCount > 0 ? `${bingoCount} BINGO!` : 'BINGOを目指そう！'}
+          </p>
+        </header>
+
+        <div className="p-4 rounded-lg bg-neutral-800/50 shadow-2xl" ref={boardRef}>
+          <div className="grid grid-cols-5 gap-2 sm:gap-3">
+            {board.map((item, index) => {
+              const isCleared = clearedCells.has(index);
+              const isFree = index === FREE_CELL_INDEX;
+              return (
                 <div
-                key={index}
-                onClick={() => handleCellClick(index)}
-                className={`aspect-square flex items-center justify-center text-center p-1 sm:p-2 rounded-md transition-all duration-200 cursor-pointer shadow-sm
-                    ${clearedCells.has(index)
-                    ? 'bg-brand-500 text-white transform -rotate-3 scale-105'
-                    : 'bg-white hover:bg-blue-50'
+                  key={index}
+                  onClick={() => handleCellClick(index)}
+                  className={`aspect-square flex items-center justify-center text-center p-1 sm:p-2 rounded-lg transition-all duration-300 ease-in-out border border-neutral-700
+                    ${isCleared
+                      ? 'bg-accent-500 text-white font-bold scale-105 shadow-lg shadow-accent-500/50'
+                      : `bg-neutral-800 ${isFree ? '' : 'cursor-pointer hover:bg-neutral-700 hover:scale-105'}`
                     }
-                    ${index === FREE_CELL_INDEX ? 'font-bold text-lg' : 'text-xs sm:text-sm'}`}
+                  `}
                 >
-                {item}
+                  {isCleared ? (
+                    isFree ? <StarIcon /> : <CheckIcon />
+                  ) : (
+                    <span className={`text-xs sm:text-sm ${isFree ? 'font-bold text-accent-400' : 'text-neutral-300'}`}>
+                      {item}
+                    </span>
+                  )}
                 </div>
-            ))}
-            </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-      <div className="mt-6 flex flex-col sm:flex-row gap-4">
-        <Button onClick={handleSaveImage}>
+
+        <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
+          <Button onClick={handleSaveImage}>
             結果を画像で保存
-        </Button>
-        <Button onClick={handleShareOnX} className="!bg-black hover:!bg-gray-800">
+          </Button>
+          <Button onClick={handleShareOnX} className="!bg-neutral-900 hover:!bg-black border !border-neutral-700">
             Xで結果をシェア
-        </Button>
-      </div>
-      <div className="mt-6 text-center">
-        <button onClick={() => window.location.href = '/'} className="text-sm text-gray-600 hover:underline">
+          </Button>
+        </div>
+        <div className="mt-8 text-center">
+          <button onClick={() => window.location.href = '/'} className="text-sm text-neutral-400 hover:text-neutral-200 hover:underline">
             やり直す
-        </button>
+          </button>
+        </div>
       </div>
     </main>
   );
@@ -161,7 +187,11 @@ function BingoClientPage() {
 
 export default function BingoPage() {
     return (
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center">読み込み中...</div>}>
+        <Suspense fallback={
+            <div className="flex min-h-screen items-center justify-center bg-neutral-900 text-neutral-100">
+                読み込み中...
+            </div>
+        }>
             <BingoClientPage />
         </Suspense>
     );
