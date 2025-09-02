@@ -26,14 +26,8 @@ const WINNING_LINES = [
   [0, 6, 12, 18, 24], [4, 8, 12, 16, 20],
 ];
 
-const CheckIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-6 h-6 sm:w-8 sm:h-8">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-  </svg>
-);
-
 const StarIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-300">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10 sm:w-12 sm:h-12 text-white">
         <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.116 3.986 1.24 5.383c.218 1.121-.956 2.023-1.956 1.442L12 18.354l-4.573 2.98c-.996.58-2.174-.32-1.956-1.442l1.24-5.383L2.28 10.955c-.886-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.007z" clipRule="evenodd" />
     </svg>
 );
@@ -90,7 +84,7 @@ function BingoClientPage() {
     if (boardRef.current === null) return;
     toPng(boardRef.current, {
         cacheBust: true,
-        backgroundColor: '#1e293b' // neutral-800
+        backgroundColor: '#f1f5f9' // neutral-100
     })
       .then((dataUrl) => {
         const link = document.createElement('a');
@@ -113,14 +107,14 @@ function BingoClientPage() {
 
   if (board.length === 0) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center bg-neutral-900 text-neutral-100">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-neutral-100 text-neutral-800">
         <p className="text-lg animate-pulse">BINGOカードを生成中...</p>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-neutral-900 text-neutral-100 flex flex-col items-center justify-center p-2 sm:p-4">
+    <main className="min-h-screen bg-neutral-100 text-neutral-800 flex flex-col items-center justify-center p-2 sm:p-4">
       {showBingo && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 transition-opacity duration-300 animate-fadeIn">
           <div className="text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-red-500 to-pink-500 animate-zoomIn" style={{ textShadow: '0 0 20px rgba(255,255,255,0.5)' }}>
@@ -129,17 +123,17 @@ function BingoClientPage() {
         </div>
       )}
       <div className="w-full max-w-3xl mx-auto p-4 sm:p-6 md:p-8">
-        <header className="text-center mb-6">
-          <h1 className="text-3xl sm:text-4xl font-bold text-neutral-50 break-words tracking-wide">
+        <header className="text-center mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-neutral-900 break-words tracking-wide">
             {nickname}のBINGO
           </h1>
-          <p className="mt-2 text-xl font-semibold text-accent-400">
+          <p className="mt-2 text-xl font-semibold text-yellow-500">
             {bingoCount > 0 ? `${bingoCount} BINGO!` : 'BINGOを目指そう！'}
           </p>
         </header>
 
-        <div className="p-4 rounded-lg bg-neutral-800/50 shadow-2xl" ref={boardRef}>
-          <div className="grid grid-cols-5 gap-2 sm:gap-3">
+        <div className="p-4" ref={boardRef}>
+          <div className="grid grid-cols-5 gap-3 sm:gap-4 justify-items-center">
             {board.map((item, index) => {
               const isCleared = clearedCells.has(index);
               const isFree = index === FREE_CELL_INDEX;
@@ -147,20 +141,26 @@ function BingoClientPage() {
                 <div
                   key={index}
                   onClick={() => handleCellClick(index)}
-                  className={`aspect-square flex items-center justify-center text-center p-1 sm:p-2 rounded-lg transition-all duration-200 ease-in-out border
+                  className={`
+                    w-16 h-16 sm:w-20 sm:h-20
+                    flex items-center justify-center text-center p-1
+                    rounded-full transition-all duration-200 ease-in-out border-2
                     ${isCleared
-                      ? 'bg-accent-500 text-white font-bold scale-105 shadow-lg shadow-accent-500/50 border-transparent'
-                      : `bg-neutral-800 border-neutral-700 ${isFree ? '' : 'cursor-pointer hover:bg-neutral-700 hover:border-accent-400 hover:-translate-y-0.5'}`
+                      ? 'bg-yellow-400 border-yellow-500 text-white font-bold shadow-lg'
+                      : `bg-white border-neutral-300 ${isFree ? '' : 'cursor-pointer hover:border-yellow-400 hover:shadow-md'}`
                     }
                   `}
                 >
-                  {isCleared ? (
-                    isFree ? <StarIcon /> : <CheckIcon />
-                  ) : (
-                    <span className={`text-xs sm:text-sm ${isFree ? 'font-bold text-accent-400' : 'text-neutral-300'}`}>
-                      {item}
-                    </span>
-                  )}
+                    <div className="flex items-center justify-center">
+                        {isFree ? <StarIcon /> : (
+                            <span className={`text-xs sm:text-sm
+                                ${isCleared ? 'text-white' : 'text-neutral-700'}
+                                ${isFree ? 'font-bold text-yellow-500' : ''}
+                            `}>
+                                {item}
+                            </span>
+                        )}
+                    </div>
                 </div>
               );
             })}
@@ -168,15 +168,15 @@ function BingoClientPage() {
         </div>
 
         <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <Button onClick={handleSaveImage}>
+          <Button onClick={handleSaveImage} className="!bg-yellow-400 hover:!bg-yellow-500 !text-white">
             結果を画像で保存
           </Button>
-          <Button onClick={handleShareOnX} className="!bg-neutral-900 hover:!bg-black border !border-neutral-700">
+          <Button onClick={handleShareOnX} className="!bg-neutral-800 hover:!bg-black !text-white">
             Xで結果をシェア
           </Button>
         </div>
         <div className="mt-8 text-center">
-          <button onClick={() => window.location.href = '/'} className="text-sm text-neutral-400 hover:text-neutral-200 hover:underline">
+          <button onClick={() => window.location.href = '/'} className="text-sm text-neutral-500 hover:text-neutral-800 hover:underline">
             やり直す
           </button>
         </div>
