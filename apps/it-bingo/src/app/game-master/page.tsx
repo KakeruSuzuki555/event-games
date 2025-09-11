@@ -18,7 +18,7 @@ export default function GameMasterPage() {
     Object.keys(JOB_TYPES).reduce((acc, key) => {
       acc[key as JobType] = 0;
       return acc;
-    }, {} as JobCounts),
+    }, {} as JobCounts)
   );
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [availableThemes, setAvailableThemes] = useState<string[]>([]);
@@ -31,7 +31,7 @@ export default function GameMasterPage() {
 
   const totalParticipants = useMemo(
     () => Object.values(jobCounts).reduce((sum, count) => sum + count, 0),
-    [jobCounts],
+    [jobCounts]
   );
 
   const startGame = () => {
@@ -48,7 +48,7 @@ export default function GameMasterPage() {
   const drawNextTheme = () => {
     if (availableThemes.length === 0) return;
 
-    const weightedThemes = availableThemes.map((theme) => {
+    const weightedThemes = availableThemes.map(theme => {
       const job = themeToJobMap.get(theme)!;
       const weight = jobCounts[job];
       return { theme, weight };
@@ -78,13 +78,12 @@ export default function GameMasterPage() {
     setCurrentTheme(null);
     setAvailableThemes([]);
     setDrawnThemes([]);
-    setJobCounts(
-      Object.keys(JOB_TYPES).reduce((acc, key) => {
-        acc[key as JobType] = 0;
-        return acc;
-      }, {} as JobCounts),
-    );
+    setJobCounts(Object.keys(JOB_TYPES).reduce((acc, key) => {
+      acc[key as JobType] = 0;
+      return acc;
+    }, {} as JobCounts));
   };
+
 
   if (isGameStarted) {
     return (
@@ -93,8 +92,8 @@ export default function GameMasterPage() {
           <div className="mb-8 min-h-[160px] flex items-center justify-center">
             {currentTheme && (
               <div className="relative rounded-2xl border border-neutral-700 bg-neutral-800/80 p-8 shadow-lg backdrop-blur-sm">
-                <div className="absolute -top-px left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent" />
-                <div className="absolute -bottom-px left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent" />
+                 <div className="absolute -top-px left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent" />
+                 <div className="absolute -bottom-px left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent" />
                 <p className="text-3xl sm:text-5xl font-bold tracking-wider text-brand-300 break-words">
                   {currentTheme}
                 </p>
@@ -111,12 +110,7 @@ export default function GameMasterPage() {
             >
               次のテーマを引く
             </Button>
-            <Button
-              onClick={resetGame}
-              size="lg"
-              variant="secondary"
-              className="px-10 py-6 text-xl"
-            >
+            <Button onClick={resetGame} size="lg" variant="secondary" className="px-10 py-6 text-xl">
               リセット
             </Button>
           </div>
@@ -128,9 +122,7 @@ export default function GameMasterPage() {
 
         {drawnThemes.length > 0 && (
           <div className="mt-12 w-full max-w-6xl">
-            <h2 className="text-xl font-bold text-neutral-200 text-center mb-4">
-              抽選済みテーマ一覧
-            </h2>
+            <h2 className="text-xl font-bold text-neutral-200 text-center mb-4">抽選済みテーマ一覧</h2>
             <div className="h-48 overflow-y-auto rounded-lg border border-neutral-800 bg-neutral-900/50 p-4">
               <ul className="space-y-2 text-neutral-400">
                 {drawnThemes.map((theme, index) => (
@@ -171,9 +163,7 @@ export default function GameMasterPage() {
                   type="number"
                   min="0"
                   value={jobCounts[key as JobType]}
-                  onChange={(e) =>
-                    handleCountChange(key as JobType, parseInt(e.target.value, 10) || 0)
-                  }
+                  onChange={(e) => handleCountChange(key as JobType, parseInt(e.target.value, 10) || 0)}
                   className="w-24 rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-neutral-50 placeholder-neutral-500 outline-none ring-0 transition-shadow focus:border-brand-500 focus:shadow-[0_0_0_3px_rgba(79,70,229,0.25)]"
                 />
               </div>
@@ -187,7 +177,12 @@ export default function GameMasterPage() {
           </div>
 
           <div className="mt-8">
-            <Button onClick={startGame} size="lg" fullWidth disabled={totalParticipants === 0}>
+            <Button
+              onClick={startGame}
+              size="lg"
+              fullWidth
+              disabled={totalParticipants === 0}
+            >
               抽選を開始
             </Button>
           </div>
