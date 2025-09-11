@@ -1,0 +1,26 @@
+---
+globs: apps/**
+description: 内製パッケージ（@event-games/ui, @event-games/utils）の利用ガイド
+---
+
+## 依存とビルド
+- 各アプリの依存は `workspace:*` を使用（例: [apps/it-bingo/package.json](mdc:apps/it-bingo/package.json)）
+- Turborepo がビルド順序を解決。通常はルートで `pnpm dev`/`pnpm build` で OK
+- ライブラリは `tsc` で `dist/` を生成（例: [packages/ui/tsconfig.json](mdc:packages/ui/tsconfig.json)）
+
+## import 規約
+- UI は `@event-games/ui` の名前付き import を推奨
+- ユーティリティは `@event-games/utils` から名前付き import
+
+```ts
+import { Button } from "@event-games/ui";
+import { formatTime } from "@event-games/utils";
+```
+
+## エクスポートの追加（ライブラリ側）
+- UI/Utils に新規モジュールを追加する場合は、`src/index.ts` で再エクスポート
+- 例: [packages/ui/src/index.ts](mdc:packages/ui/src/index.ts), [packages/utils/src/index.ts](mdc:packages/utils/src/index.ts)
+
+## 注意点
+- ランタイムでパッケージを相互 import しない循環依存を維持
+- 型の共通化が必要なら別パッケージとして切り出しを検討

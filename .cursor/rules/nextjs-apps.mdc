@@ -1,0 +1,34 @@
+---
+globs: apps/**
+description: Next.js アプリの構成・運用ルール
+---
+
+## ディレクトリと基本
+- App Router を採用し、`src/app` 配下に `layout.tsx` と `page.tsx` を配置
+- 例: [apps/it-bingo/src/app/layout.tsx](mdc:apps/it-bingo/src/app/layout.tsx), [apps/it-bingo/src/app/page.tsx](mdc:apps/it-bingo/src/app/page.tsx)
+- 追加ページは `src/app/<route>/page.tsx` で作成（例: [bingo/page.tsx](mdc:apps/it-bingo/src/app/bingo/page.tsx)）
+
+## スクリプト
+- 開発: `pnpm -F <app> dev`（例: `pnpm -F it-bingo dev`）
+- ビルド: `pnpm -F <app> build`、起動: `pnpm -F <app> start`
+- ルートからは `pnpm dev` で並列実行
+
+## 技術スタック
+- Next.js 15、React 19、TypeScript 5
+- スタイルは Tailwind v4（アプリごとに設定）
+
+## コンポーネント指針
+- 既定はサーバーコンポーネント。ブラウザ API/イベント/状態が必要な場合のみ `"use client"`
+- UI ロジックは `@event-games/ui` へ抽出を検討
+- ビジネスロジック/ユーティリティは `@event-games/utils` へ集約
+
+## 画像・アセット
+- `public/` 配下を利用（例: [apps/example-game/public](mdc:apps/example-game/public)）
+
+## Lint/Format
+- 各アプリの ESLint 設定（例: `eslint-config-next`）を使用
+- ルートの Prettier で整形
+
+## パフォーマンス
+- ルーティングはサーバーでデータ準備し、クライアント側の状態を最小化
+- 不要なクライアント化を避け、バンドルサイズを抑制

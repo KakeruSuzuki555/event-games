@@ -19,23 +19,48 @@ const shuffle = (array: string[]) => {
 
 const WINNING_LINES = [
   // Rows
-  [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11, 12, 13, 14], [15, 16, 17, 18, 19], [20, 21, 22, 23, 24],
+  [0, 1, 2, 3, 4],
+  [5, 6, 7, 8, 9],
+  [10, 11, 12, 13, 14],
+  [15, 16, 17, 18, 19],
+  [20, 21, 22, 23, 24],
   // Columns
-  [0, 5, 10, 15, 20], [1, 6, 11, 16, 21], [2, 7, 12, 17, 22], [3, 8, 13, 18, 23], [4, 9, 14, 19, 24],
+  [0, 5, 10, 15, 20],
+  [1, 6, 11, 16, 21],
+  [2, 7, 12, 17, 22],
+  [3, 8, 13, 18, 23],
+  [4, 9, 14, 19, 24],
   // Diagonals
-  [0, 6, 12, 18, 24], [4, 8, 12, 16, 20],
+  [0, 6, 12, 18, 24],
+  [4, 8, 12, 16, 20],
 ];
 
 const CheckIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-6 h-6 sm:w-8 sm:h-8">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={3}
+    stroke="currentColor"
+    className="w-6 h-6 sm:w-8 sm:h-8"
+  >
     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
   </svg>
 );
 
 const StarIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-300">
-        <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.116 3.986 1.24 5.383c.218 1.121-.956 2.023-1.956 1.442L12 18.354l-4.573 2.98c-.996.58-2.174-.32-1.956-1.442l1.24-5.383L2.28 10.955c-.886-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.007z" clipRule="evenodd" />
-    </svg>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-300"
+  >
+    <path
+      fillRule="evenodd"
+      d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.116 3.986 1.24 5.383c.218 1.121-.956 2.023-1.956 1.442L12 18.354l-4.573 2.98c-.996.58-2.174-.32-1.956-1.442l1.24-5.383L2.28 10.955c-.886-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.007z"
+      clipRule="evenodd"
+    />
+  </svg>
 );
 
 function BingoClientPage() {
@@ -62,7 +87,7 @@ function BingoClientPage() {
   const checkBingo = (currentCells: Set<number>) => {
     let count = 0;
     for (const line of WINNING_LINES) {
-      if (line.every(cell => currentCells.has(cell))) {
+      if (line.every((cell) => currentCells.has(cell))) {
         count++;
       }
     }
@@ -89,8 +114,8 @@ function BingoClientPage() {
   const handleSaveImage = useCallback(() => {
     if (boardRef.current === null) return;
     toPng(boardRef.current, {
-        cacheBust: true,
-        backgroundColor: '#1e293b' // neutral-800
+      cacheBust: true,
+      backgroundColor: '#1e293b', // neutral-800
     })
       .then((dataUrl) => {
         const link = document.createElement('a');
@@ -106,24 +131,27 @@ function BingoClientPage() {
 
   const handleShareOnX = () => {
     const text = `IT業界あるあるBINGOで ${bingoCount} BINGO!! でした！`;
-    const hashtags = "IT業界あるあるBINGO";
+    const hashtags = 'IT業界あるあるBINGO';
     const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&hashtags=${encodeURIComponent(hashtags)}`;
     window.open(url, '_blank');
   };
 
   if (board.length === 0) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center bg-neutral-900 text-neutral-100">
-        <p className="text-lg animate-pulse">BINGOカードを生成中...</p>
+      <main className="flex min-h-screen flex-col items-center justify-center">
+        <p className="text-lg animate-pulse text-neutral-300">BINGOカードを生成中...</p>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-neutral-900 text-neutral-100 flex flex-col items-center justify-center p-2 sm:p-4">
+    <main className="min-h-screen flex flex-col items-center justify-center p-2 sm:p-4">
       {showBingo && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 transition-opacity duration-300 animate-fadeIn">
-          <div className="text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-red-500 to-pink-500 animate-zoomIn" style={{ textShadow: '0 0 20px rgba(255,255,255,0.5)' }}>
+          <div
+            className="text-7xl sm:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-red-500 to-pink-500 animate-zoomIn"
+            style={{ textShadow: '0 0 20px rgba(255,255,255,0.5)' }}
+          >
             BINGO!
           </div>
         </div>
@@ -138,7 +166,11 @@ function BingoClientPage() {
           </p>
         </header>
 
-        <div className="p-4 rounded-lg bg-neutral-800/50 shadow-2xl" ref={boardRef}>
+        <div
+          className="relative p-4 rounded-2xl border border-neutral-800/70 bg-neutral-900/60 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] backdrop-blur supports-[backdrop-filter]:bg-neutral-900/40"
+          ref={boardRef}
+        >
+          <div className="absolute -top-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-400/40 to-transparent" />
           <div className="grid grid-cols-5 gap-2 sm:gap-3">
             {board.map((item, index) => {
               const isCleared = clearedCells.has(index);
@@ -147,17 +179,26 @@ function BingoClientPage() {
                 <div
                   key={index}
                   onClick={() => handleCellClick(index)}
-                  className={`aspect-square flex items-center justify-center text-center p-1 sm:p-2 rounded-lg transition-all duration-200 ease-in-out border
-                    ${isCleared
-                      ? 'bg-accent-500 text-white font-bold scale-105 shadow-lg shadow-accent-500/50 border-transparent'
-                      : `bg-neutral-800 border-neutral-700 ${isFree ? '' : 'cursor-pointer hover:bg-neutral-700 hover:border-accent-400 hover:-translate-y-0.5'}`
+                  className={`aspect-square flex items-center justify-center text-center p-1 sm:p-2 rounded-xl transition-all duration-300 ease-in-out border
+                    ${
+                      isCleared
+                        ? 'bg-gradient-to-br from-emerald-500 to-teal-600 border-emerald-400 text-white font-bold shadow-lg ring-2 ring-emerald-200/60 transform scale-105'
+                        : `bg-neutral-800/70 border-neutral-700 ${isFree ? '' : 'cursor-pointer hover:bg-neutral-700 hover:border-accent-400 hover:-translate-y-0.5 active:scale-95 active:bg-accent-500/20'}`
                     }
                   `}
                 >
                   {isCleared ? (
-                    isFree ? <StarIcon /> : <CheckIcon />
+                    isFree ? (
+                      <StarIcon />
+                    ) : (
+                      <span className="text-[10px] sm:text-sm text-white font-bold drop-shadow">
+                        {item}
+                      </span>
+                    )
                   ) : (
-                    <span className={`text-xs sm:text-sm ${isFree ? 'font-bold text-accent-400' : 'text-neutral-300'}`}>
+                    <span
+                      className={`text-[10px] sm:text-sm ${isFree ? 'font-bold text-accent-400' : 'text-neutral-300'}`}
+                    >
                       {item}
                     </span>
                   )}
@@ -168,15 +209,18 @@ function BingoClientPage() {
         </div>
 
         <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <Button onClick={handleSaveImage}>
+          <Button onClick={handleSaveImage} size="md" variant="primary">
             結果を画像で保存
           </Button>
-          <Button onClick={handleShareOnX} className="!bg-neutral-900 hover:!bg-black border !border-neutral-700">
+          <Button onClick={handleShareOnX} variant="secondary">
             Xで結果をシェア
           </Button>
         </div>
         <div className="mt-8 text-center">
-          <button onClick={() => window.location.href = '/'} className="text-sm text-neutral-400 hover:text-neutral-200 hover:underline">
+          <button
+            onClick={() => (window.location.href = '/')}
+            className="text-sm text-neutral-400 hover:text-neutral-200 hover:underline"
+          >
             やり直す
           </button>
         </div>
@@ -186,13 +230,15 @@ function BingoClientPage() {
 }
 
 export default function BingoPage() {
-    return (
-        <Suspense fallback={
-            <div className="flex min-h-screen items-center justify-center bg-neutral-900 text-neutral-100">
-                読み込み中...
-            </div>
-        }>
-            <BingoClientPage />
-        </Suspense>
-    );
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-neutral-900 text-neutral-100">
+          読み込み中...
+        </div>
+      }
+    >
+      <BingoClientPage />
+    </Suspense>
+  );
 }

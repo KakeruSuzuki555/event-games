@@ -1,0 +1,53 @@
+---
+alwaysApply: true
+description: Monorepo 全体ルール（構成/ビルド/実行/命名/依存）
+---
+
+## プロジェクト構成（Monorepo）
+- ルートは pnpm + Turborepo 構成。
+  - パッケージの束ね: [pnpm-workspace.yaml](mdc:pnpm-workspace.yaml)
+  - タスク実行: [turbo.json](mdc:turbo.json)
+- 配下構成
+  - アプリ: `apps/*`（Next.js）
+  - ライブラリ: `packages/*`（UI, utils, eslint-config, tsconfig, tailwind-config）
+
+## 主要スクリプト（ルート）
+- [package.json](mdc:package.json)
+  - `pnpm dev`: Turborepo で各パッケージの `dev` を並列実行
+  - `pnpm build`: 依存順にビルド
+  - `pnpm lint` / `pnpm test` / `pnpm format`
+- Node 要件: `>=20`、パッケージマネージャ: `pnpm@9` を想定
+
+## TypeScript 設定
+- 共通 TS 設定は [tsconfig.base.json](mdc:tsconfig.base.json) と [packages/tsconfig](mdc:packages/tsconfig/package.json) を参照
+- 各パッケージ・アプリは `@event-games/tsconfig` を継承
+
+## Next.js アプリ
+- 例: [apps/it-bingo](mdc:apps/it-bingo/package.json), [apps/example-game](mdc:apps/example-game/package.json)
+- App Router 構成（`src/app` 配下）: 例として [layout.tsx](mdc:apps/it-bingo/src/app/layout.tsx), [page.tsx](mdc:apps/it-bingo/src/app/page.tsx)
+- Tailwind v4 を利用（アプリ側に設定ファイル）
+
+## 内製パッケージ
+- UI コンポーネント: [packages/ui](mdc:packages/ui/package.json)
+  - エントリ: `dist/index.js`（ビルド: `tsc`）
+- ユーティリティ: [packages/utils](mdc:packages/utils/package.json)
+  - 例: [time.ts](mdc:packages/utils/src/lib/time.ts)
+- ESLint 設定: [packages/eslint-config](mdc:packages/eslint-config/index.js)
+- Tailwind 設定: [packages/tailwind-config](mdc:packages/tailwind-config/tailwind.config.js)
+
+## 開発運用の原則
+- 依存は `workspace:*` を使用し、ビルド順序は Turborepo に委譲
+- 新規パッケージは `packages/` 配下に作成し、`build` スクリプトで `tsc` 出力を `dist/` に生成
+- アプリからは `@event-games/*` 名前空間で import する
+- フォーマットは Prettier、Lint は各アプリの ESLint 設定に従う
+
+## 実行
+- ルートでの開発: `pnpm dev`
+- 個別アプリ: `pnpm -F <app-name> dev`（例: `pnpm -F it-bingo dev`）
+
+## 命名・パス規約
+- パッケージ名は `@event-games/<name>` を用いる
+- アプリ配下は `src/app` を基準とし、機能単位でディレクトリを切る
+
+## リンク集
+- 仕様: [apps/it-bingo/requirement.md](mdc:apps/it-bingo/requirement.md)
