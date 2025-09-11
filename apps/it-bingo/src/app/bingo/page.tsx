@@ -125,14 +125,14 @@ function BingoClientPage() {
 
   if (board.length === 0) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center">
+      <div className="flex-grow flex items-center justify-center">
         <p className="text-lg animate-pulse text-neutral-300">BINGOカードを生成中...</p>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-2 sm:p-4">
+    <main className="flex-grow flex flex-col items-center justify-center p-2 sm:p-4">
       {showBingo && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 transition-opacity duration-300 animate-fadeIn">
           <div
