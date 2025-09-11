@@ -144,21 +144,21 @@ function BingoClientPage() {
         </div>
       )}
       <div className="w-full max-w-3xl mx-auto p-4 sm:p-6 md:p-8">
-        <header className="text-center mb-6">
-          <h1 className="text-3xl sm:text-4xl font-bold text-neutral-50 break-words tracking-wide">
+        <header className="text-center mb-4 sm:mb-6">
+          <h1 className="text-2xl sm:text-4xl font-bold text-neutral-50 break-words tracking-wide">
             {nickname}のBINGO
           </h1>
-          <p className="mt-2 text-xl font-semibold text-accent-400">
+          <p className="mt-2 text-lg sm:text-xl font-semibold text-accent-400">
             {bingoCount > 0 ? `${bingoCount} BINGO!` : 'BINGOを目指そう！'}
           </p>
         </header>
 
         <div
-          className="relative p-4 rounded-2xl border border-neutral-800/70 bg-neutral-900/60 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] backdrop-blur supports-[backdrop-filter]:bg-neutral-900/40"
+          className="relative p-2 sm:p-3 md:p-4 rounded-2xl border border-neutral-800/70 bg-neutral-900/60 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] backdrop-blur supports-[backdrop-filter]:bg-neutral-900/40"
           ref={boardRef}
         >
           <div className="absolute -top-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-400/40 to-transparent" />
-          <div className="grid grid-cols-5 gap-2 sm:gap-3">
+          <div className="grid grid-cols-5 gap-1 sm:gap-2 md:gap-3">
             {board.map((item, index) => {
               const isCleared = clearedCells.has(index);
               const isFree = index === FREE_CELL_INDEX;
@@ -166,7 +166,7 @@ function BingoClientPage() {
                 <div
                   key={index}
                   onClick={() => handleCellClick(index)}
-                  className={`aspect-square flex items-center justify-center text-center p-1 sm:p-2 rounded-xl transition-all duration-300 ease-in-out border
+                  className={`aspect-square flex items-center justify-center text-center p-0.5 sm:p-1 md:p-2 rounded-lg sm:rounded-xl transition-all duration-300 ease-in-out border
                     ${
                       isCleared
                         ? 'bg-gradient-to-br from-emerald-500 to-teal-600 border-emerald-400 text-white font-bold shadow-lg ring-2 ring-emerald-200/60 transform scale-105'
@@ -178,13 +178,13 @@ function BingoClientPage() {
                     isFree ? (
                       <StarIcon />
                     ) : (
-                      <span className="text-[10px] sm:text-sm text-white font-bold drop-shadow">
+                      <span className="text-[10px] sm:text-xs md:text-sm text-white font-bold drop-shadow">
                         {item}
                       </span>
                     )
                   ) : (
                     <span
-                      className={`text-[10px] sm:text-sm ${isFree ? 'font-bold text-accent-400' : 'text-neutral-300'}`}
+                      className={`text-[10px] sm:text-xs md:text-sm ${isFree ? 'font-bold text-accent-400' : 'text-neutral-300'}`}
                     >
                       {item}
                     </span>
