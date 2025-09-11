@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@event-games/ui';
 import { JOB_TYPES, JobType } from '@/lib/aruaru';
 
@@ -200,6 +201,20 @@ export default function Home() {
               BINGOカードを生成
             </Button>
           </div>
+        </div>
+
+        <div className="mt-8 flex items-center justify-center">
+          <div className="h-px w-1/3 bg-neutral-700" />
+          <p className="px-4 text-xs text-neutral-500">OR</p>
+          <div className="h-px w-1/3 bg-neutral-700" />
+        </div>
+
+        <div className="mt-4">
+          <Link href="/game-master" passHref legacyBehavior>
+            <Button variant="secondary" fullWidth>
+              ゲームマスターとして抽選を開始
+            </Button>
+          </Link>
         </div>
       </div>
     </main>
