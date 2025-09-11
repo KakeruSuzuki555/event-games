@@ -1,14 +1,14 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     // packages/uiも対象に含める
-    "../../packages/ui/src/lib/**/*.{js,ts,jsx,tsx}",
+    '../../packages/ui/src/lib/**/*.{js,ts,jsx,tsx}',
   ],
-  presets: [require("@event-games/tailwind-config")],
+  presets: [require('@event-games/tailwind-config')],
   theme: {
     extend: {
       keyframes: {
@@ -17,8 +17,8 @@ const config: Config = {
           '100%': { opacity: '1' },
         },
         zoomIn: {
-            '0%': { transform: 'scale(0.5)', opacity: '0' },
-            '100%': { transform: 'scale(1)', opacity: '1' },
+          '0%': { transform: 'scale(0.5)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
         },
       },
       animation: {
