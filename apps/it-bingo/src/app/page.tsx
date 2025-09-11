@@ -152,7 +152,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-10 sm:px-6">
+    <main className="flex flex-grow items-center justify-center px-4 py-10 sm:px-6">
       <div className="w-full max-w-lg">
         <div className="relative rounded-2xl border border-neutral-800/70 bg-neutral-900/60 p-6 sm:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] backdrop-blur supports-[backdrop-filter]:bg-neutral-900/40">
           {/* カード上部の装飾バー */}
