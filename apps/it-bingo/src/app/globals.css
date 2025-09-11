@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Chrome, Edge, and Safari */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  /*
+    NOTE: `box-shadow` is a workaround to override the default blue background of autofill.
+    A solid color `neutral-800 (#262626)` is used because `box-shadow` does not support alpha channel colors.
+  */
+  -webkit-box-shadow: 0 0 0px 1000px #262626 inset !important;
+  /*
+    NOTE: `text-fill-color` is used to override the default black text color of autofill.
+    `neutral-100 (#f5f5f5)` is used.
+  */
+  -webkit-text-fill-color: #f5f5f5 !important;
+  /*
+    NOTE: Caret color is also changed to match the text color.
+  */
+  caret-color: #f5f5f5 !important;
+}
