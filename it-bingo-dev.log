@@ -1,0 +1,10 @@
+
+> it-bingo@0.1.0 dev /app/apps/it-bingo
+> next dev
+
+   ▲ Next.js 15.5.2
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+
+ ✓ Starting...
+ ✓ Ready in 3.7s
