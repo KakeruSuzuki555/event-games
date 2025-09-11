@@ -175,7 +175,7 @@ export default function Home() {
                   type="text"
                   value={nickname}
                   onChange={(e) => setNickname(e.target.value)}
-                  className="block w-full rounded-lg border border-neutral-700 bg-neutral-800/70 px-4 py-2.5 text-neutral-100 placeholder-neutral-500 outline-none ring-0 transition-shadow focus:border-brand-500 focus:shadow-[0_0_0_3px_rgba(79,70,229,0.25)]"
+                  className="block w-full rounded-lg border border-neutral-700 bg-neutral-800 px-4 py-2.5 text-neutral-50 placeholder-neutral-500 outline-none ring-0 transition-shadow focus:border-brand-500 focus:shadow-[0_0_0_3px_rgba(79,70,229,0.25)]"
                   placeholder="例: すごいエンジニア"
                 />
               </div>
