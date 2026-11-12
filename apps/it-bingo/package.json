@@ -12,7 +12,7 @@
     "@event-games/ui": "workspace:*",
     "@event-games/utils": "workspace:*",
     "html-to-image": "^1.11.13",
-    "next": "15.5.2",
+    "next": "15.5.29",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
@@ -24,7 +24,7 @@
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.20",
     "eslint": "^9",
-    "eslint-config-next": "15.5.2",
+    "eslint-config-next": "15.5.29",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
